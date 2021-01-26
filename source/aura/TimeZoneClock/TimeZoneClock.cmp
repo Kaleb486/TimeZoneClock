@@ -1,0 +1,42 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForRecordHome" 
+                controller="TimeZoneClockController" access="global" >
+    <aura:attribute name="areaCode" type="String" />
+    <aura:attribute name="timeZones" type="list" />
+    <aura:attribute name="offsets" type="list" />
+    <aura:attribute name="currentOffset" type="String" />
+    <aura:attribute name="message" type="String" />
+    <aura:attribute name="clock" type="String" />
+    <aura:attribute name="clientClock" type="String" />
+    <aura:attribute name="isDebugMode" type="Boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <force:recordData recordId="{!v.recordId}" layoutType="FULL" recordUpdated="{!c.doInit}"/>
+    <lightning:card title="Time Zone Clock" class="slds-p-around_x-small">
+        <aura:set attribute="actions">
+            <lightning:buttonIcon iconName="utility:info" size="small" onclick="{!c.infoClick}"
+                                  alternativeText="clock" />
+        </aura:set>
+        <aura:if isTrue="{!v.isDebugMode}" >
+            <div class="slds-m-left_medium">
+                Area Code: <ui:outputText value="{!v.areaCode}"/><br/>
+                Time Zone: <aura:iteration items="{!v.timeZones}" var="tz">
+                <lightning:badge label="{!tz}"/>
+                </aura:iteration><br/>
+                Client's Offset: <aura:iteration items="{!v.offsets}" var="os">
+                <lightning:badge label="{!os}"/>
+                </aura:iteration><br/>
+                Your Offset: <lightning:badge label="{!v.currentOffset}"/>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.message == null}" >
+                <div class="slds-text-align_center">
+                    Your Time: <ui:outputText class="slds-text-heading_medium" value="{!v.clock}"/><br/>
+                    Client's Time: <ui:outputText class="slds-text-heading_medium" value="{!v.clientClock}"/><br/>            
+                </div>
+        </aura:if>
+        <aura:if isTrue="{!v.message != null}" >
+            <div class="slds-text-align_center slds-text-color_error">
+                <ui:outputText value="{!v.message}"/><br/>
+            </div>
+        </aura:if>
+    </lightning:card>
+</aura:component>
