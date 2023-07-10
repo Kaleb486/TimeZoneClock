@@ -36,12 +36,12 @@ public with sharing class TimeZoneClockController
                     }
                     else
                     {
-                        result.Message = 'Cannot found corresponding time zone for area code (' + result.AreaCode +  ').';
+                        result.Message = 'Cannot find corresponding time zone for area code (' + result.AreaCode +  ').';
                     }                    
                 }
                 else
                 {
-                    result.Message = 'No phone number can be used to resolve time zone.';
+                    result.Message = 'No phone number provided to resolve time zone.';
                 }
             }
         }
